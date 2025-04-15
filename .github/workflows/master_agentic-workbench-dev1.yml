@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'agentic-workbench-dev1'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_77c18e6fe60b4d7c95d7f807aeae9680 }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         images: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/workbench-ui:${{ github.sha }}'
