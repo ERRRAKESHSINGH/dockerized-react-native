@@ -41,11 +41,13 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'agentic-workbench-dev1'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: ${{ secrets.ACR_LOGIN_SERVER }}/agenticworkbenchdev1/workbench-ui:${{ github.sha }}'
+    - name: Set up container for Azure Web App
+      run: |
+        az webapp config container set \
+          --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+          --docker-custom-image-name ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/workbench-ui:${{ github.sha }} \
+          --docker-registry-server-url https://${{ secrets.ACR_LOGIN_SERVER }}
+    - name: Restart Azure Web App
+      run: |
+        az webapp restart --name ${{ secrets.AZURE_WEBAPP_NAME }} --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }}
