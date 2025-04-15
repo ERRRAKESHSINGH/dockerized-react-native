@@ -22,15 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://agenticworkbenchdev1.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_0df407da581742aa92054b46b1471109 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_a40322cdccee4cf5b0cf2855dd0cac9d }}
+        registry: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: agenticworkbenchdev1.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_0df407da581742aa92054b46b1471109 }}/workbench-ui:${{ github.sha }}
+        tags: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/workbench-ui:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'agentic-workbench-dev1'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_77c18e6fe60b4d7c95d7f807aeae9680 }}
-        images: 'agenticworkbenchdev1.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_0df407da581742aa92054b46b1471109 }}/workbench-ui:${{ github.sha }}'
+        images: ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/workbench-ui:${{ github.sha }}'
