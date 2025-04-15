@@ -48,7 +48,7 @@ jobs:
     - name: Log in to ACR
       run: |
         echo "${{ secrets.ACR_PASSWORD }}" | docker login ${{ secrets.ACR_LOGIN_SERVER }} \
-          --username ${{ secrets.ACR_USERNAME }} --password-st
+          --username ${{ secrets.ACR_USERNAME }} --password-stdin
     - name: Set up container for Azure Web App
       run: |
         az webapp config container set \
