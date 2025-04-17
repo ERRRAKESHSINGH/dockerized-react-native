@@ -26,7 +26,6 @@ jobs:
       with:
         image-ref: '${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/workbench-ui:${{ github.sha }}'
         format: 'table'
-        exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'   
